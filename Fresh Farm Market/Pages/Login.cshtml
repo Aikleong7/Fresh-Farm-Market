@@ -1,0 +1,59 @@
+﻿@page
+@model Fresh_Farm_Market.Pages.LoginModel
+@{
+}
+<script src="https://www.google.com/recaptcha/api.js?render=6LdZTQAkAAAAAIotNBIJyHuDvddb-QOQLvhk8er-"></script>
+<script src="https://www.google.com/recaptcha/api.js"></script>
+<script>
+	grecaptcha.ready(function () {
+		grecaptcha.execute('6LdZTQAkAAAAAIotNBIJyHuDvddb-QOQLvhk8er-', { action: 'submit' }).then(function (token) {
+			// Add your logic to submit to your backend server here.
+			console.log(token);
+			$("#input-token").val(token);
+		});
+	});
+
+</script>
+
+<div class="container mt-5">
+
+	<div class="row justify-content-center align-items-center">
+
+		<div class="col-sm-12 col-md-12 col-lg-4">
+			<h1 class="mb-3">Login </h1>
+			
+			<form id="demo-form" asp-action="OnPostAsync">
+				<button  class="btn btn-light ml-5 border-dark" asp-page-handler="LoginG">Google Login</button>
+				<div asp-validation-summary="All" class="text-danger"></div>
+				<div class="mb-3">
+					<label class="form-label" asp-for="LModel.Email">Email Address</label>
+					<input type="Text" asp-for="LModel.Email" class="form-control" />
+					<span asp-validaton-for="LModel.Email" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="LModel.Password">Password</label>
+					<input type="Text" asp-for="LModel.Password" class="form-control" />
+					<span asp-validaton-for="LModel.Password" class="text-danger"></span>
+					<a href="/changepassword">Forget Password?</a>
+				</div>
+
+				<div class="mb-3 form-check">
+					<input type="checkbox" asp-for="LModel.RememberMe" class="form-check-input" />
+					<label class="form-check-label" asp-for="LModel.RememberMe">Remember Me?</label>
+				</div>
+				
+				
+
+				<input id="input-token" asp-for="LModel.token"  hidden/>
+				<span asp-validaton-for="LModel.token" class="text-danger"></span>
+				<div class="mb-3">
+					<button type="submit" class="btn btn-primary">Login</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+

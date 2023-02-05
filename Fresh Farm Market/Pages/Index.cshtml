@@ -1,0 +1,33 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<p>
+    Email: @Model.user.Email
+</p>
+<p>
+    Credit Card: @Model.user.CreditCard
+</p>
+<p>
+    Gender: @Model.user.Gender
+</p>
+<p>
+    Address: @Model.user.Address
+</p>
+<p>
+    About Me: @Model.user.AboutMe
+</p>
+<p>
+    Phone Number: @Model.user.PhoneNumber
+</p>
+<img src="@Model.imgsrc" />
+
+

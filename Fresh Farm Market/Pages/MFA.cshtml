@@ -1,0 +1,30 @@
+﻿@page
+@model Fresh_Farm_Market.Pages.Mfa
+@{
+}
+<h1> Verify your account with Email</h1>
+<h2>Code sent through Email</h2>
+
+<div class="container mt-5">
+
+	<div class="row justify-content-center align-items-center">
+
+		<div class="col-sm-12 col-md-12 col-lg-4">
+			
+
+			<form method="post">
+				<div asp-validation-summary="All" class="text-danger"></div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="mfa.code">Code</label>
+					<input type="Text" asp-for="mfa.code" class="form-control" />
+					<span asp-validaton-for="mfa.code" class="text-danger"></span>
+				</div>
+				<div class="mb-3">
+					<button type="submit" class="btn btn-primary">Verify</button>
+				</div>
+		</form>
+		</div>
+	</div>
+</div>
+

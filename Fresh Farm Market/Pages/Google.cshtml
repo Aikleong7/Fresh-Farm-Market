@@ -1,0 +1,63 @@
+﻿@page
+@model Fresh_Farm_Market.Pages.GoogleModel
+@{
+}
+<div class="container mt-5">
+
+	<div class="row justify-content-center align-items-center">
+
+		<div class="col-sm-12 col-md-12 col-lg-4">
+			<h1 class="mb-3">Google Register </h1>
+
+			<form method="post" enctype="multipart/form-data">
+				<div asp-validation-summary="All" class="text-danger"></div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="GoogleRegister.CreditCard">Credit Card</label>
+					<input type="Text" asp-for="GoogleRegister.CreditCard" class="form-control" />
+					<span asp-validaton-for="GoogleRegister.CreditCard" class="text-danger"></span>
+				</div>
+				<div class="mb-3">
+					<label class="form-label" asp-for="GoogleRegister.PhoneNumber">Phone Number</label>
+					<input type="tel" asp-for="GoogleRegister.PhoneNumber" class="form-control" />
+					<span asp-validaton-for="GoogleRegister.PhoneNumber" class="text-danger"></span>
+				</div>
+				<div class="mb-3">
+					<label class="form-label" asp-for="GoogleRegister.Address">Address</label>
+					<input type="Text" asp-for="GoogleRegister.Address" class="form-control" />
+					<span asp-validaton-for="GoogleRegister.Address" class="text-danger"></span>
+				</div>
+
+				<div class="row mb-3">
+				<label class="col-sm-2 col-form-label" asp-for="GoogleRegister.Gender"></label>
+			<div class="col-sm-10 d-flex align-items-center">
+				<div class="form-check form-check-inline">
+							@Html.RadioButtonFor(m => m.GoogleRegister.Gender, "M", new {@class = "form-check-input"})
+							<label class="form-check-label">Male</label>
+						</div>
+						<div class="form-check form-check-inline">
+							@Html.RadioButtonFor(m => m.GoogleRegister.Gender, "F", new {@class = "form-check-input"})
+							<label class="form-check-label">Female</label>
+						</div>
+						<span asp-validation-for="GoogleRegister.Gender" class="text-danger"></span>
+					</div>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="GoogleRegister.Photo">Photo</label>
+					<input type="file" asp-for="GoogleRegister.Photo" class="form-control" accept="image/jpg" />
+					<span asp-validaton-for="GoogleRegister.Photo" class="text-danger"></span>
+				</div>
+				<div class="mb-3">
+					<label class="form-label" asp-for="GoogleRegister.AboutMe">About Me</label>
+					<input type="Text" asp-for="GoogleRegister.AboutMe" class="form-control" />
+					<span asp-validaton-for="GoogleRegister.AboutMe" class="text-danger"></span>
+				</div>
+				<div class="mb-3">
+					<button type="submit" class="btn btn-primary">Register</button>
+				</div>
+				</form>
+				</div>
+			</div>
+		</div>
+
