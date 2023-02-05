@@ -110,6 +110,27 @@ namespace FreshFarmMarket.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Fresh_Farm_Market.Models.AuditLog", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Activity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("userId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("auditLog");
+                });
+
             modelBuilder.Entity("Fresh_Farm_Market.Models.PasswordHistory", b =>
                 {
                     b.Property<string>("Id")

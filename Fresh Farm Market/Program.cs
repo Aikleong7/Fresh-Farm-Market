@@ -48,7 +48,10 @@ builder.Services.AddSession(options =>
     options.Cookie.Name = "FreshFarmMarket";
     options.IdleTimeout = TimeSpan.FromMinutes(1);
 });
-builder.Services.ConfigureApplicationCookie(options => options.LoginPath = "/login");
+builder.Services.ConfigureApplicationCookie(options => {
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+    options.LoginPath = "/login";
+    });
 builder.Services.AddDataProtection();
 
 
