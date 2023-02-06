@@ -27,8 +27,7 @@ namespace Fresh_Farm_Market.Pages
         public void OnGet(string token, string email)
         {
             resetpassword = new ResetPassword();
-            Console.WriteLine(email);
-            Console.WriteLine(token);
+
             if (token == null || email == null)
             {
                 ModelState.AddModelError("", "Invalid password reset token");

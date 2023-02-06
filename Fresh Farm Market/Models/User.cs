@@ -16,6 +16,8 @@ namespace Fresh_Farm_Market.Model
         public int MinimumPasswordAge { get; } = 1;
 
         public int MaximumPasswordAge { get; } = 10000;
+        public string OTP { get; set; }
+        public DateTime OTPdateTime { get; set; }
         
 
         public DateTime PasswordDay { get; set; }

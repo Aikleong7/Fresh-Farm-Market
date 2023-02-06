@@ -23,6 +23,7 @@
 			<h1 class="mb-3">Login </h1>
 			
 			<form id="demo-form" asp-action="OnPostAsync">
+				@Html.AntiForgeryToken()
 				<button  class="btn btn-light ml-5 border-dark" asp-page-handler="LoginG">Google Login</button>
 				<div asp-validation-summary="All" class="text-danger"></div>
 				<div class="mb-3">

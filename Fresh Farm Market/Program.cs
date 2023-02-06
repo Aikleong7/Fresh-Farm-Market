@@ -15,6 +15,7 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<UserDbContext>();
 builder.Services.AddScoped<PasswordHistoryService>();
+builder.Services.AddScoped<AuditLogService>();
 //builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<UserDbContext>();
 
 builder.Services.AddIdentity<User, IdentityRole>(options =>
@@ -35,6 +36,7 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireUppercase = true;
     options.Password.RequiredLength = 12;
 });
+builder.Services.AddAntiforgery();
 builder.Services.AddTransient<reCaptchaService>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddDistributedMemoryCache();
@@ -46,10 +48,11 @@ builder.Services.AddSession(options =>
 {
     
     options.Cookie.Name = "FreshFarmMarket";
-    options.IdleTimeout = TimeSpan.FromMinutes(1);
+    options.IdleTimeout = TimeSpan.FromMinutes(10);
+    
 });
 builder.Services.ConfigureApplicationCookie(options => {
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
     options.LoginPath = "/login";
     });
 builder.Services.AddDataProtection();
@@ -68,9 +71,9 @@ builder.Services.AddAuthentication(
     .AddGoogle(options =>
 {
     options.SignInScheme = IdentityConstants.ExternalScheme;
-  
-    options.ClientId = "34536395750-4qemn61eaj75l8h9mapfv97095l0irhi.apps.googleusercontent.com";
-    options.ClientSecret = "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";
+
+    options.ClientId = builder.Configuration["Gmail:ClientId"];
+    options.ClientSecret = builder.Configuration["Gmail:ClientSecret"];
 });
 var app = builder.Build();
 

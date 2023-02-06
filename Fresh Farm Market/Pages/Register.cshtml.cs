@@ -73,7 +73,8 @@ namespace Fresh_Farm_Market.Pages
                     CreditCard = protector.Protect(HttpUtility.HtmlEncode(rmodel.CreditCard)),
                     Address = HttpUtility.HtmlEncode(rmodel.Address),
                     AboutMe = HttpUtility.HtmlEncode(rmodel.AboutMe),
-                    PasswordDay = DateTime.Now
+                    PasswordDay = DateTime.Now,
+                    OTPdateTime = DateTime.Now
                 };
                 var uploadsFolder = "uploads";
                 var imageFile = user.Id + ".jpg";

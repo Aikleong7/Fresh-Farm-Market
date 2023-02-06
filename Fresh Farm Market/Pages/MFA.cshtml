@@ -19,7 +19,9 @@
 					<label class="form-label" asp-for="mfa.code">Code</label>
 					<input type="Text" asp-for="mfa.code" class="form-control" />
 					<span asp-validaton-for="mfa.code" class="text-danger"></span>
+					<button asp-page-handler="Resend" class="btn btn-outline-info">Resend OTP</button>
 				</div>
+				
 				<div class="mb-3">
 					<button type="submit" class="btn btn-primary">Verify</button>
 				</div>

@@ -27,6 +27,8 @@ namespace Fresh_Farm_Market.ViewModel
 
         [Required]
         [DataType(DataType.Password)]
+        [MinLength(12)]
+        [RegularExpression("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\\s).{12,}$", ErrorMessage = "Min 12 chars,Use combination of lower-case, upper-case, Numbers\r\nand special characters")]
         [Compare(nameof(Password), ErrorMessage = "Password and confirmation password does not match")]
         public string ConfirmPassword { get; set; }
 

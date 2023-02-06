@@ -19,12 +19,14 @@ namespace Fresh_Farm_Market.Pages
         
         [BindProperty]
         public MFA mfa { get; set; }
+        private readonly IConfiguration _config;
         private UserManager<User> userManager { get; }
 
-        public Mfa(UserManager<User> userManager)
+        public Mfa(UserManager<User> userManager, IConfiguration config)
         {
-        
+
             this.userManager = userManager;
+            _config = config;
         }
         private Random _random = new Random();
 
@@ -35,41 +37,76 @@ namespace Fresh_Farm_Market.Pages
         public async Task<IActionResult> OnGet()
         {
             var user = await userManager.FindByEmailAsync(User.Identity.Name);
-            var token = await userManager.GenerateTwoFactorTokenAsync(user, TokenOptions.DefaultProvider);
             var email = new MimeMessage();
             var otp = GenerateRandomNo();
-
-            HttpContext.Session.SetString("OTP",otp);
-            Console.WriteLine(HttpContext.Session.GetString("OTP"));
-            email.From.Add(new MailboxAddress("TEST", "aikleong0713@gmail.com"));
-            email.To.Add(new MailboxAddress("aik",user.Email));
+            user.OTP = otp;
+            user.OTPdateTime = DateTime.Now;
+            Console.WriteLine(User.Identity.Name);
+            Console.WriteLine(user.Email);
+            Console.WriteLine(user.OTP);
+            await userManager.UpdateAsync(user);
+            email.From.Add(new MailboxAddress("TEST", _config["Gmail:Email"]));
+            email.To.Add(new MailboxAddress("User",user.Email));
             email.Subject = "Authentication";
             email.Body = new TextPart("plain") { Text = otp };
             
             using (var smtp = new SmtpClient())
             {
                 smtp.Connect("smtp.gmail.com", 587, false);
-                smtp.Authenticate("aikleong0713@gmail.com", "ynvinbhvfetivlcn");
+                smtp.Authenticate(_config["Gmail:Email"], _config["Gmail:AppPassword"]);
                 smtp.Send(email);
                 smtp.Disconnect(true);
             }
             return Page();
                
         }
+        public async Task<IActionResult> OnPostResend()
+        {
+            
+            User user = await userManager.FindByEmailAsync(HttpContext.User.Identity.Name);
+            Console.WriteLine(HttpContext.User.Identity.Name);
+            var email = new MimeMessage();
+            var otp = GenerateRandomNo();
+            user.OTP = "1323";
+            user.OTPdateTime = DateTime.Now;
+            Console.WriteLine(user.OTP);
+            IdentityResult result = await userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                Console.WriteLine("Success");
+            }
+            email.From.Add(new MailboxAddress("TEST", _config["Gmail:Email"]));
+            email.To.Add(new MailboxAddress("User", user.Email));
+            email.Subject = "Authentication";
+            email.Body = new TextPart("plain") { Text = otp };
+
+            using (var smtp = new SmtpClient())
+            {
+                smtp.Connect("smtp.gmail.com", 587, false);
+                smtp.Authenticate(_config["Gmail:Email"], _config["Gmail:AppPassword"]);
+                smtp.Send(email);
+                smtp.Disconnect(true);
+            }
+            return Page();
+        }
 
         public async Task<IActionResult> OnPost()
         {
             if (ModelState.IsValid)
             {
-                Console.WriteLine(HttpContext.Session.GetString("OTP"));
-                Console.WriteLine(mfa.code);
-                    Console.WriteLine(HttpContext.Session.GetString("OTP"));
-                if (mfa.code == HttpContext.Session.GetString("OTP"))
+                var user = await userManager.FindByEmailAsync(User.Identity.Name);
+                DateTime current = DateTime.Now;
+                DateTime otptime = user.OTPdateTime.AddMinutes(15);
+                int result = DateTime.Compare(otptime, current);
+                if (result < 0)
                 {
-                    Console.WriteLine("ram");
-                    var user = await userManager.FindByEmailAsync(User.Identity.Name);
+                    ModelState.AddModelError("", "OTP Token Expired.");
+                    return Page();
+                }
+                if (mfa.code == user.OTP)
+                {  
                     user.EmailConfirmed = true;
-                    return RedirectToPage("Privacy");
+                    return RedirectToPage("Index");
                 }
                 else
                 {

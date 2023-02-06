@@ -19,6 +19,12 @@ namespace Fresh_Farm_Market.Model
             string connectionstring = _config.GetConnectionString("UserConnectionString");
             optionsBuilder.UseSqlServer(connectionstring);
         }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<User>().Property(m => m.OTP).IsRequired(false);
+            //builder.Entity<User>().Property(m => m.OTPdateTime).IsRequired(false);
+            base.OnModelCreating(builder);
+        }
 
         public DbSet<PasswordHistory> passwordHistories { get; set; }
         public DbSet<AuditLog> auditLog { get; set; }

@@ -36,6 +36,9 @@ namespace Fresh_Farm_Market.Pages
 
         public void OnGet()
         {
+            Console.WriteLine(HttpContext.Request.Headers["deviceId"].ToString());
+            Console.WriteLine(HttpContext.Connection.RemoteIpAddress.ToString());
+
         }
 
         public void Google()

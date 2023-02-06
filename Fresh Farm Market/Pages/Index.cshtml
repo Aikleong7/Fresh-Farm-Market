@@ -31,3 +31,10 @@
 <img src="@Model.imgsrc" />
 
 
+<script>
+    var options = new CookieOptions { HttpOnly = true };
+    var identifier = Guid.NewGuid().ToString();
+    Response.Cookies.Append("identifier", identifier, options);
+
+</script>
+

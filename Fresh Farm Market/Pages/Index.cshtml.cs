@@ -10,7 +10,7 @@ namespace Fresh_Farm_Market.Pages
 {
     [Authorize(Roles = "Customer, Google")]
 
-
+    [AutoValidateAntiforgeryToken]
     public class IndexModel : PageModel
     {
         private readonly UserManager<User> userManager;
@@ -30,10 +30,10 @@ namespace Fresh_Farm_Market.Pages
             var dataProtectionProvider = DataProtectionProvider.Create("EncryptData");
             var protector = dataProtectionProvider.CreateProtector("MySecretKey");
             user = await userManager.FindByIdAsync(userManager.GetUserId(User));
-            HttpContext.Session.SetString("sess", "hello");
+            user.CreditCard = protector.Unprotect(user.CreditCard);
           
             imgsrc = "../uploads/" + user.Id + ".jpg";
-            user.CreditCard = protector.Unprotect(user.CreditCard);
+            
             //if (HttpContext.Session.GetString("SessionTimeout") == null)
             //{
             //    return RedirectToPage("Login");
