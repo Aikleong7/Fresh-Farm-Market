@@ -36,15 +36,9 @@ namespace Fresh_Farm_Market.Pages
 
         public void OnGet()
         {
-            Console.WriteLine(HttpContext.Request.Headers["deviceId"].ToString());
-            Console.WriteLine(HttpContext.Connection.RemoteIpAddress.ToString());
 
         }
 
-        public void Google()
-        {
-            Console.WriteLine("ME");
-        }
         public IActionResult OnPostLoginG()
         {
             string redirectUrl = "/Google";
@@ -94,15 +88,17 @@ namespace Fresh_Farm_Market.Pages
                     if (user != null)
                     {
                         DateTime current = DateTime.Now;
-                        DateTime userMax = user.PasswordDay.AddMinutes(user.MaximumPasswordAge);
+                        DateTime userMax = user.PasswordDay.AddDays(user.MaximumPasswordAge);
                         int result = DateTime.Compare(userMax, current);
-                        if (result > 0)
+                       
+                        if (result <= 0)
                         {
                             ModelState.AddModelError("", "Maximum Password Age reached password need to be reset");
                             return Page();
                         }
                         var audit = new AuditLog()
                         {
+                            Id = Guid.NewGuid().ToString(),
                             userId = user.Id,
                             Activity = "Logged In",
                             DateTime = DateTime.Now
@@ -111,15 +107,7 @@ namespace Fresh_Farm_Market.Pages
                         return RedirectToPage("Index");
                     }
 
-                    //var claims = new List<Claim> {
-                    //new Claim(ClaimTypes.Name, "c@c.com"),
-                    //new Claim(ClaimTypes.Email, "c@c.com"),
-                    //new Claim("Department", "HR")
-                    //};
-                    //var i = new ClaimsIdentity(claims, "MyCookieAuth");
-                    //ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(i);
-                    //await HttpContext.SignInAsync("MyCookieAuth", claimsPrincipal);
-                   
+
                     
                 }
 

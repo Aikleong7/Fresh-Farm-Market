@@ -16,13 +16,15 @@ namespace Fresh_Farm_Market.Pages
         
     {
         private UserManager<User> userManager { get; }
+        private readonly IConfiguration _config;
 
         [BindProperty]
         public Changepassword Changepassword { get; set; }
 
-        public Index1Model(UserManager<User> usermanager)
+        public Index1Model(UserManager<User> usermanager, IConfiguration config)
         {
             this.userManager = usermanager;
+            _config = config;
         }
         public void OnGet()
         {
@@ -34,6 +36,7 @@ namespace Fresh_Farm_Market.Pages
             if (user == null)
             {
                 ModelState.AddModelError("", "Email does not exist");
+                return Page();
             }
 
             DateTime userdate = user.PasswordDay;
@@ -54,7 +57,7 @@ namespace Fresh_Farm_Market.Pages
                 using (var smtp = new SmtpClient())
                 {
                     smtp.Connect("smtp.gmail.com", 587, false);
-                    smtp.Authenticate("aikleong0713@gmail.com", "ynvinbhvfetivlcn");
+                    smtp.Authenticate(_config["Gmail:Email"], _config["Gmail:AppPassword"]);
                     smtp.Send(email);
                     smtp.Disconnect(true);
                 }

@@ -25,6 +25,7 @@ namespace Fresh_Farm_Market.Service
         {
             PasswordHistory? passwordHistory = userDbContext.passwordHistories.FirstOrDefault(x => x.UserId == id);
             userDbContext.passwordHistories.Remove(passwordHistory);
+            userDbContext.SaveChanges();
         }
     }
 }

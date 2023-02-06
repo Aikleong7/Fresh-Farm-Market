@@ -66,7 +66,7 @@ namespace Fresh_Farm_Market.Pages
                         }
                         else
                         {
-                            passwordHistoryService.removehistory(past[0].Id);
+                            passwordHistoryService.removehistory(user.Id);
                             
                         }
 
@@ -83,6 +83,7 @@ namespace Fresh_Farm_Market.Pages
                         };
                         var audit = new AuditLog()
                         {
+                            Id = Guid.NewGuid().ToString(),
                             userId = user.Id,
                             Activity = "Reset Password",
                             DateTime = DateTime.Now
@@ -91,7 +92,7 @@ namespace Fresh_Farm_Market.Pages
                         user.PasswordDay = DateTime.Now;    
                         passwordHistoryService.AddPassowrdHistory(passhistroy);
                         Console.WriteLine("Password Reset Suceessfully");
-                        RedirectToPage("Login");
+                        return RedirectToPage("Login");
                     }
                     foreach(var error in result.Errors)
                     {

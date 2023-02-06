@@ -29,6 +29,7 @@ namespace Fresh_Farm_Market.Pages
         {
             var audit = new AuditLog()
             {
+                Id = Guid.NewGuid().ToString(),
                 userId = userManager.GetUserId(User),
                 Activity = "Logged Out",
                 DateTime = DateTime.Now

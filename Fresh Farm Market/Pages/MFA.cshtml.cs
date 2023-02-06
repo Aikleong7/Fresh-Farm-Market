@@ -41,9 +41,6 @@ namespace Fresh_Farm_Market.Pages
             var otp = GenerateRandomNo();
             user.OTP = otp;
             user.OTPdateTime = DateTime.Now;
-            Console.WriteLine(User.Identity.Name);
-            Console.WriteLine(user.Email);
-            Console.WriteLine(user.OTP);
             await userManager.UpdateAsync(user);
             email.From.Add(new MailboxAddress("TEST", _config["Gmail:Email"]));
             email.To.Add(new MailboxAddress("User",user.Email));
@@ -64,12 +61,12 @@ namespace Fresh_Farm_Market.Pages
         {
             
             User user = await userManager.FindByEmailAsync(HttpContext.User.Identity.Name);
-            Console.WriteLine(HttpContext.User.Identity.Name);
+
             var email = new MimeMessage();
             var otp = GenerateRandomNo();
             user.OTP = "1323";
             user.OTPdateTime = DateTime.Now;
-            Console.WriteLine(user.OTP);
+
             IdentityResult result = await userManager.UpdateAsync(user);
             if (result.Succeeded)
             {
