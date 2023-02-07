@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Fresh Farm Market/Migrations
+/Fresh Farm Market/wwwroot/uploads

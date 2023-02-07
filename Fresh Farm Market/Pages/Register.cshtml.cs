@@ -101,7 +101,7 @@ namespace Fresh_Farm_Market.Pages
                     var passhistroy = new PasswordHistory()
                     {
                         Id = Guid.NewGuid().ToString(),
-                        UserId = user.Id,
+                        UserId = user.Email,
                         Password = user.PasswordHash
                     };
                     passwordHistory.AddPassowrdHistory(passhistroy);

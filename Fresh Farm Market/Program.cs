@@ -26,7 +26,7 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
-    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(30);
     options.Lockout.MaxFailedAccessAttempts = 3;
     options.User.RequireUniqueEmail = true;
     options.Lockout.AllowedForNewUsers = true;
@@ -48,11 +48,11 @@ builder.Services.AddSession(options =>
 {
     
     options.Cookie.Name = "FreshFarmMarket";
-    options.IdleTimeout = TimeSpan.FromMinutes(10);
+    options.IdleTimeout = TimeSpan.FromSeconds(30);
     
 });
 builder.Services.ConfigureApplicationCookie(options => {
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+    options.ExpireTimeSpan = TimeSpan.FromSeconds(30);
     options.LoginPath = "/login";
     });
 builder.Services.AddDataProtection();

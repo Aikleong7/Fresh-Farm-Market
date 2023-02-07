@@ -49,7 +49,8 @@ namespace Fresh_Farm_Market.Pages
                 if (user != null)
                 {
                     var past = passwordHistoryService.GetPasswordHistoriesbyId(user.Id);
-                    if (past.Count == 2)
+                    Console.WriteLine(past.Count);
+                    if (past.Count <= 2)
                     {
                         var hashpw = userManager.PasswordHasher.HashPassword(user, resetpassword.Password);
                         var checker = true;
@@ -63,22 +64,21 @@ namespace Fresh_Farm_Market.Pages
                         if (checker == false)
                         {
                             ModelState.AddModelError("", "Password is used within 2 history");
+                            return Page();
                         }
-                        else
-                        {
-                            passwordHistoryService.removehistory(user.Id);
-                            
-                        }
-
                     }
-                  
+                    else
+                    {
+                        passwordHistoryService.removehistory(user);
+                    }
+
                     var result = await userManager.ResetPasswordAsync(user, resetpassword.Token, resetpassword.Password);
                     if (result.Succeeded)
                     {
                         var passhistroy = new PasswordHistory()
                         {
                             Id = Guid.NewGuid().ToString(),
-                            UserId = user.Id,
+                            UserId = user.Email,
                             Password = user.PasswordHash
                         };
                         var audit = new AuditLog()

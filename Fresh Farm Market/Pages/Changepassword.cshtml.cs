@@ -41,7 +41,7 @@ namespace Fresh_Farm_Market.Pages
 
             DateTime userdate = user.PasswordDay;
             DateTime current = DateTime.Now;
-            int resilt = DateTime.Compare(current, userdate.AddMinutes(user.MinimumPasswordAge));
+            int resilt = DateTime.Compare(current, userdate.AddSeconds(user.MinimumPasswordAge));
             if (resilt > 0)
             {
 

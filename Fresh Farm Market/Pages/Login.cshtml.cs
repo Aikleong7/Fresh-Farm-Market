@@ -66,7 +66,7 @@ namespace Fresh_Farm_Market.Pages
         public async Task<IActionResult> OnPostAsync()
             
         {
-            
+
             var reCaptcharesult = _reCaptchaService.tokenVerify(LModel.token);
             if (!reCaptcharesult.Result.success || reCaptcharesult.Result.score <= 0.5)
             {

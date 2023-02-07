@@ -27,11 +27,11 @@ namespace Fresh_Farm_Market.Pages
 
         public async Task<IActionResult> OnGet()
         {
+
             var dataProtectionProvider = DataProtectionProvider.Create("EncryptData");
             var protector = dataProtectionProvider.CreateProtector("MySecretKey");
             user = await userManager.FindByIdAsync(userManager.GetUserId(User));
             user.CreditCard = protector.Unprotect(user.CreditCard);
-          
             imgsrc = "../uploads/" + user.Id + ".jpg";
             
             //if (HttpContext.Session.GetString("SessionTimeout") == null)

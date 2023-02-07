@@ -14,7 +14,7 @@ namespace Fresh_Farm_Market.ViewModel
         public string Password { get; set; }
 
         public bool RememberMe { get; set; }
-        [Required]
+       
         public string token { get; set; }
     }
 }
