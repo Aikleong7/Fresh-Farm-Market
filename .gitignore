@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 /Fresh Farm Market/Migrations
 /Fresh Farm Market/wwwroot/uploads
+/Fresh Farm Market/Pages/review.cshtml
+/Fresh Farm Market/Pages/review.cshtml.cs
